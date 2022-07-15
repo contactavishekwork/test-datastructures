@@ -47,7 +47,7 @@ public class NumberProblem {
 
         for (int number : numbers) {
             for (int j = 1; j < upperLimit; j++) {
-                if(numbers[number] == numbers[j]) {
+                if(number == numbers[j]) {
                     j += 1;
                     break;
                 }
