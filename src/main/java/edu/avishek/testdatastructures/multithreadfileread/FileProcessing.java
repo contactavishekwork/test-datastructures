@@ -2,13 +2,12 @@ package edu.avishek.testdatastructures.multithreadfileread;
 
 import java.io.File;
 import java.io.InvalidObjectException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class FileProcessing {
 
     private static final int NO_OF_THREADS = 10;
+    private static Map<String, Long> fileSizeMap = new HashMap<>();
 
     public static void main(String[] args) throws InvalidObjectException {
         File filePath = new File("C:\\Program Files (x86)");
@@ -38,7 +37,7 @@ public class FileProcessing {
                 e.printStackTrace();
             }
         }
-
+        System.out.println(fileSizeMap);
     }
 
     private static void runThread(File[] fileList, int thread, int filesPerThread, int remainingFiles) {
@@ -49,8 +48,10 @@ public class FileProcessing {
             files.addAll(Arrays.asList(fileList).subList(fileList.length - remainingFiles, fileList.length));
         }
 
-
         for(File file : files) {
+            synchronized (file) {
+                fileSizeMap.put(file.getName(), file.length());
+            }
             System.out.println("Processing file " + file.getName() + " in thread " + Thread.currentThread().getName());
         }
     }
