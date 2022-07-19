@@ -20,17 +20,12 @@ public class FileProcessing {
             throw new InvalidObjectException("Null List of Files");
         }
 
-        final int filesPerThread = fileList.length/NO_OF_THREADS;;
+        final int filesPerThread = fileList.length/NO_OF_THREADS;
         final int remainingFiles = fileList.length%NO_OF_THREADS;
 
         for(int thread = 0; thread < NO_OF_THREADS; thread++) {
             int finalThread = thread;
-            threads[thread] = new Thread() {
-                @Override
-                public void run() {
-                    runThread(fileList, finalThread, filesPerThread, remainingFiles);
-                }
-            };
+            threads[thread] = new Thread(() -> runThread(fileList, finalThread, filesPerThread, remainingFiles));
         }
 
         for(Thread t1 : threads) {
