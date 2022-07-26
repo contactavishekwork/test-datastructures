@@ -1,5 +1,7 @@
 package edu.avishek.testdatastructures.java9features.streamapi;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -10,6 +12,7 @@ public class StreamExample {
         dropWhileDemo();
         ofNullableDemo();
         streamIterateDemo();
+        elementsToArray();
     }
 
     /**
@@ -61,5 +64,21 @@ public class StreamExample {
      */
     private static void streamIterateDemo(){
         Stream.iterate(1, integer -> integer <= 10, integer -> integer * 3).forEach(System.out::println);
+    }
+
+    /**
+     * Stream way to get elements to array
+     */
+    private static void elementsToArray() {
+        List<Integer> list = new ArrayList<>();
+
+        for(int i = 1; i< 10; i++){
+            list.add(i);
+        }
+
+        Stream<Integer> stream = list.stream();
+        Integer[] evenNumbersArr = stream.filter(i -> i%2 == 0).toArray(Integer[]::new);
+
+        System.out.print(Arrays.toString(evenNumbersArr));
     }
 }
